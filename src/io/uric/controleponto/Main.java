@@ -1,4 +1,4 @@
-package io.uric.projeto1;
+package io.uric.controleponto;
 
 public class Main {
 
