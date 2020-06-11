@@ -5,7 +5,7 @@ public class Gerente extends Funcionario implements IGerente{
     private String senha;
 
     public String getLogin() {
-        return login;
+        return this.login;
     }
 
     public void setLogin(String login) {
@@ -13,7 +13,7 @@ public class Gerente extends Funcionario implements IGerente{
     }
 
     public String getSenha() {
-        return senha;
+        return this.senha;
     }
 
     public void setSenha(String senha) {
