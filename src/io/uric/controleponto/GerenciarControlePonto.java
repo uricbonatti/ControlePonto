@@ -13,13 +13,31 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class GerenciarControlePonto {
-    private static void Sleep() throws InterruptedException {
+    private static void sleepTime() throws InterruptedException {
         Thread.sleep((long)(Math.random() * 1000 + 1000));
     }
-    private static List<RegistroPonto> filtragemPontos(List<RegistroPonto> pontosRegistrados, Funcionario funcionario){
-        return pontosRegistrados.stream()
+    private static RegistroPonto gerarRegistoPonto(List<RegistroPonto> pontosRegistrados, Funcionario funcionario){
+        List<RegistroPonto> pontosFiltrados = pontosRegistrados.stream()
                 .filter((RegistroPonto rp) -> (rp.getFunc().equals(funcionario)))
                 .collect(Collectors.toList());
+        if (pontosFiltrados.size()>=1) {
+            RegistroPonto ultimoPonto = pontosFiltrados.get(pontosFiltrados.size() - 1);
+            if (ultimoPonto.getHoraEntrada()!=null && ultimoPonto.getHoraSaida() == null){
+                return new RegistroPonto(
+                        Long.valueOf(pontosRegistrados.size()+1),
+                        funcionario,
+                        ultimoPonto.getData(),
+                        ultimoPonto.getHoraEntrada(),
+                        LocalDateTime.now()
+                    );
+            }
+        }
+        return new RegistroPonto(
+                Long.valueOf(pontosRegistrados.size()+1),
+                funcionario,
+                LocalDate.now(),
+                LocalDateTime.now()
+        );
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -42,33 +60,30 @@ public class GerenciarControlePonto {
         ));
         funcionarios.add(new Secretaria(
                 funcionarios.size()+1,
-                "Pedro Peçanha",
-                "pecanha@praca.com",
+                "Maria Julia Peçanha",
+                "mjp@praca.com",
                 "49273123-92",
                 "38314115",
                 "1565"
         ));
-        pontosRegistrados.add(new RegistroPonto(Long.valueOf(pontosRegistrados.size()+1), funcionarios.get(0), LocalDate.now(), LocalDateTime.now()));
-        Sleep();
-        pontosRegistrados.add(new RegistroPonto(Long.valueOf(pontosRegistrados.size()+1), funcionarios.get(1), LocalDate.now(), LocalDateTime.now()));
-        Sleep();
-        pontosRegistrados.add(new RegistroPonto(Long.valueOf(pontosRegistrados.size()+1), funcionarios.get(1), LocalDate.now(), LocalDateTime.now()));
-        Sleep();
 
-        List<RegistroPonto> pontosFiltrados = filtragemPontos(pontosRegistrados,funcionarios.get(1));
-
-        if (pontosFiltrados.size()>=1){
-            RegistroPonto temp = pontosFiltrados.get(pontosFiltrados.size()-1);
-            if (temp.getHoraEntrada()!=null && temp.getHoraSaida() == null){
-                pontosRegistrados.add(new RegistroPonto(Long.valueOf(pontosRegistrados.size()+1), temp.getFunc(), temp.getData(), temp.getHoraEntrada(), LocalDateTime.now()));
-            }
-            else if (temp.getHoraEntrada()!=null && temp.getHoraSaida() != null){
-                pontosRegistrados.add(new RegistroPonto(Long.valueOf(pontosRegistrados.size()+1), temp.getFunc(), LocalDate.now(), LocalDateTime.now()));
-            }
-        }
-
-        System.out.println("Iniciando testes de exibição....");
-        pontosRegistrados.stream().forEach(registroPonto -> registroPonto.apresentarRegistroPonto());
+        pontosRegistrados.add(gerarRegistoPonto(pontosRegistrados,funcionarios.get(0)));
+        sleepTime();
+        pontosRegistrados.add(gerarRegistoPonto(pontosRegistrados,funcionarios.get(1)));
+        sleepTime();
+        pontosRegistrados.add(gerarRegistoPonto(pontosRegistrados,funcionarios.get(2)));
+        sleepTime();
+        pontosRegistrados.add(gerarRegistoPonto(pontosRegistrados,funcionarios.get(0)));
+        sleepTime();
+        pontosRegistrados.add(gerarRegistoPonto(pontosRegistrados,funcionarios.get(1)));
+        sleepTime();
+        pontosRegistrados.add(gerarRegistoPonto(pontosRegistrados,funcionarios.get(2)));
+        sleepTime();
+        pontosRegistrados
+                .stream()
+                .forEach(
+                        registroPonto -> registroPonto.apresentarRegistroPonto()
+                );
 
 
 
