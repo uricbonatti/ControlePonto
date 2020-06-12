@@ -6,6 +6,12 @@ public abstract class Funcionario implements IFuncionario{
     private String email;
     private String documento;
 
+    protected Funcionario(int id, String nome, String email, String documento){
+        this.documento = documento;
+        this.idFunc = id;
+        this.nome = nome;
+        this.email = email;
+    }
     @Override
     public int getIdFunc() {
         return this.idFunc;

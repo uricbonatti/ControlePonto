@@ -12,6 +12,26 @@ public class RegistroPonto implements IRegistroPonto {
     LocalDateTime horaEntrada;
     LocalDateTime horaSaida;
 
+    public RegistroPonto(
+            long idRegPonto,
+            Funcionario funcionario,
+            LocalDate dataRegistro,
+            LocalDateTime horaEntrada){
+        this.idRegPonto = idRegPonto;
+        this.funcionario = funcionario;
+        this.dataRegistro = dataRegistro;
+        this.horaEntrada = horaEntrada;
+    }
+    public RegistroPonto(
+            long idRegPonto,
+            Funcionario funcionario,
+            LocalDate dataRegistro,
+            LocalDateTime horaEntrada,
+            LocalDateTime horaSaida){
+        this(idRegPonto,funcionario, dataRegistro, horaEntrada);
+        this.horaSaida = horaSaida;
+
+    }
     @Override
     public long getIdRegPonto() {
         return this.idRegPonto;
